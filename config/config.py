@@ -10,6 +10,8 @@ PG_URL = os.getenv("PG_URL")
 SBERMOCK_API_URL = os.environ.get("SBERMOCK_API_URL")
 
 BMP_API_TOKEN = os.getenv("BMP_API_TOKEN")
+BMP_API_TOKEN_ADMIN = os.getenv("BMP_API_TOKEN_ADMIN")
+
 
 DB_HOST = os.getenv("DB_HOST")
 DB_PORT = os.getenv("DB_PORT")
