@@ -2,7 +2,7 @@ import os
 import logging
 import uuid
 
-from config import SBERMOCK_API_URL
+from config.config import SBERMOCK_API_URL
 from flask import Flask, request, jsonify
 
 app = Flask(__name__)
@@ -44,26 +44,6 @@ def get_order_status_extended():
         "errorMessage": "Успешно",
         "orderStatus": 2,
         "orderNumber": order_number,
-    }
-
-    # Отправка симулированного ответа
-    return jsonify(response_data)
-
-@app.route("/api/v1/sberbank", methods=["GET"])
-def simulate_sberbank_request():
-    order_number = request.args.get("orderNumber")
-    md_order = request.args.get("mdOrder")
-    operation = request.args.get("operation")
-    status = request.args.get("status")
-
-    if not all([order_number, md_order, operation, status]):
-        return jsonify({"error": "Invalid request parameters"}), 400
-
-    response_data = {
-        "orderNumber": order_number,
-        "mdOrder": md_order,
-        "operation": operation,
-        "status": status,
     }
 
     # Отправка симулированного ответа

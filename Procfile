@@ -1,1 +1,1 @@
-web: python mock_api/sberbank_mock_api.py
+web: python mock_api/sber_mock.py

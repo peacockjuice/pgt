@@ -2,10 +2,10 @@ import pytest
 import requests
 import uuid
 
-from config import BMP_API_URL, BMP_API_TOKEN, PG_URL
-from database import connect_to_db
+from config.config import BMP_API_URL, BMP_API_TOKEN, PG_URL
+from config.database import connect_to_db
 from dotenv import load_dotenv
-from test_data.test_data import query, input_data, get_headers
+from test_data.data import query, input_data, get_headers
 
 # Загрузка переменных окружения из файла .env
 load_dotenv()
