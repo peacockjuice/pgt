@@ -158,7 +158,7 @@ def get_headers(api_token):
         "token": api_token
     }
 
-def rest_query(order_id, order_sum, order_item_id):
+def rest_order_items_patch_query(order_id, order_sum, order_item_id):
     return {
     "data": {
         "meta": {

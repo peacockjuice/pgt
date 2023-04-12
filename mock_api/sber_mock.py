@@ -14,7 +14,7 @@ order_status_calls = {}
 
 @app.route("/payment/rest/register.do", methods=["POST"])
 def register_order():
-    # Получение входящих данных из запроса
+    # Получение входящих данных из запроса (позже будет полезно)
     user_name = request.form.get("userName")
     password = request.form.get("password")
     order_number = request.form.get("orderNumber")
@@ -46,6 +46,7 @@ def get_order_status_extended():
 
     logging.info(f"Received request: {request.form}")
 
+    # Далее - уёбский костыль, который отдаёт разные статусы на одном эндпоинте. НЕОБХОДИМО реализовать ИНАЧЕ!
     # Увеличиваем счетчик вызовов для данного orderId
     if order_id in order_status_calls:
         order_status_calls[order_id] += 1
@@ -58,7 +59,7 @@ def get_order_status_extended():
     elif order_status_calls[order_id] == 2:
         order_status = 4
     else:
-        order_status = 0  # Здесь можно установить дефолт-значение, если более двух запросов.
+        order_status = 0  # Дефолт-значение, если будет более двух запросов.
 
     response_data = {
         "errorCode": "0",
