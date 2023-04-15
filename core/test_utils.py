@@ -1,9 +1,11 @@
 import uuid
-from config.database import connect_to_db
+import psycopg2
 from typing import Dict, Any
 from random import choice
+from config.config import DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PASSWORD
 
 
+# check_order_response тут временно и это надо в другое место, 100%
 def check_order_response(response_data):
     order_data = response_data["data"]["createOrder"]
     order_id = order_data["orders"][0]["id"]
@@ -19,6 +21,17 @@ def check_order_response(response_data):
     assert order_id is not None
     assert md_order_uuid is not None
     return order_data, order_id, order_sum, order_item_id, order_item_sum, vendor_form_url, md_order
+
+
+def connect_to_db():
+    conn = psycopg2.connect(
+        host=DB_HOST,
+        port=DB_PORT,
+        dbname=DB_NAME,
+        user=DB_USER,
+        password=DB_PASSWORD
+    )
+    return conn
 
 
 def get_order_info_from_db(md_order):

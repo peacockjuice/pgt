@@ -1,7 +1,8 @@
 import requests
-from core.graphql_requests import get_headers
-from core.rest_requests import rest_order_items_patch_query, rest_status_patch_query
+from core.bmp_gql import get_headers
+from core.bmp_rest import rest_order_items_patch_query, rest_status_patch_query
 
+# Мб этот файл стоит слить с bmp_rest.py?
 
 def update_order_data(bmp_api_url, bmp_api_token_admin, order_id, order_sum, order_item_id, order_item_sum):
     bmp_api_rest_orders = f"{bmp_api_url}/orders/{order_id}"

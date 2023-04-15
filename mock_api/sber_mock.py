@@ -25,7 +25,7 @@ def register_order():
 
     logging.info(f"Received request: {request.form}")
 
-# Создание симулированного ответа
+    # Создание симулированного ответа
     orderId = str(uuid.uuid4())
     response_data = {
     "orderId": orderId,
@@ -72,6 +72,7 @@ def get_order_status_extended():
 
     return jsonify(response_data)
 
+
 @app.route("/payment/rest/refund.do", methods=["POST"])
 def refund_order():
     user_name = request.form.get("userName")
@@ -96,6 +97,7 @@ def refund_order():
     logger.debug(f"Sending response: {response_data}")
 
     return jsonify(response_data)
+
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=int(os.environ.get("PORT", 5000)))

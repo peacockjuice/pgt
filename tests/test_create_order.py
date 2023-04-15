@@ -2,12 +2,12 @@ import pytest
 from config.config import BMP_API_URL, BMP_API_TOKEN, BMP_API_TOKEN_ADMIN, PG_URL
 
 # Функции для подготовки и выполнения тестовых запросов
-from test_data.data import create_order_input, delivery_slots_input, update_products_in_cart_input
+from core.bmp_gql_input import create_order_input, delivery_slots_input, update_products_in_cart_input
 from core.test_utils import get_order_info_from_db, check_order_response, random_delivery_token
-from core.pg_requests import callback_request, callback_refund_request
-from core.graphql_requests import send_graphql_request
-from core.bmp_requests_rest import update_order_data, change_order_status
-from core.bmp_requests_graphql import create_order, delivery_slots, update_products_in_cart
+from core.pg_callbacks import callback_request, callback_refund_request
+from core.bmp_gql import send_graphql_request
+from core.bmp_rest_query import update_order_data, change_order_status
+from core.bmp_gql_query import create_order, delivery_slots, update_products_in_cart
 
 
 @pytest.mark.parametrize("bmp_api_url, bmp_api_token, bmp_api_token_admin", [
