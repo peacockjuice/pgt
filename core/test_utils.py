@@ -34,7 +34,7 @@ def connect_to_db():
     return conn
 
 
-def get_order_info_from_db(md_order):
+def get_order_info_from_pg_db(md_order):
     with connect_to_db() as conn:
         with conn.cursor() as cursor:
             cursor.execute("SELECT id FROM payment WHERE bank_id = %s", (md_order,))
@@ -45,7 +45,12 @@ def get_order_info_from_db(md_order):
     return payment_id, order_number
 
 
-def random_delivery_token(response_data: Dict[str, Any]) -> str:
+def get_random_delivery_token(response_data: Dict[str, Any]) -> str:
     delivery_slot_list = response_data["data"]["deliverySlots"]["list"]
     random_delivery_token = choice(delivery_slot_list)
     return random_delivery_token["deliveryToken"]
+
+
+def get_product_ids_list(products_and_amounts):
+    product_ids = [product_id for product_id, _ in products_and_amounts]
+    return product_ids
