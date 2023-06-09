@@ -13,8 +13,8 @@ BMP_API_TOKEN = os.getenv("BMP_API_TOKEN")
 BMP_API_TOKEN_ADMIN = os.getenv("BMP_API_TOKEN_ADMIN")
 
 
-DB_HOST = os.getenv("DB_HOST")
-DB_PORT = os.getenv("DB_PORT")
-DB_NAME = os.getenv("DB_NAME")
-DB_USER = os.getenv("DB_USER")
-DB_PASSWORD = os.getenv("DB_PASSWORD")
+PG_DB_HOST = os.getenv("PG_DB_HOST")
+PG_DB_PORT = os.getenv("PG_DB_PORT")
+PG_DB_NAME = os.getenv("PG_DB_NAME")
+PG_DB_USER = os.getenv("PG_DB_USER")
+PG_DB_PASSWORD = os.getenv("PG_DB_PASSWORD")

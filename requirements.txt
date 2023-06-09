@@ -1,7 +1,7 @@
-requests
-pytest
-psycopg2-binary
-python-dotenv
+faker
 flask
 gunicorn
-faker
+psycopg2-binary
+pytest
+python-dotenv
+requests

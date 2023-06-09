@@ -2,7 +2,7 @@ import uuid
 import psycopg2
 from typing import Dict, Any
 from random import choice
-from config.config import DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PASSWORD
+from config.config import PG_DB_HOST, PG_DB_PORT, PG_DB_NAME, PG_DB_USER, PG_DB_PASSWORD
 
 
 # check_order_response тут временно и это надо в другое место, 100%
@@ -25,11 +25,11 @@ def check_order_response(response_data):
 
 def connect_to_db():
     conn = psycopg2.connect(
-        host=DB_HOST,
-        port=DB_PORT,
-        dbname=DB_NAME,
-        user=DB_USER,
-        password=DB_PASSWORD
+        host=PG_DB_HOST,
+        port=PG_DB_PORT,
+        dbname=PG_DB_NAME,
+        user=PG_DB_USER,
+        password=PG_DB_PASSWORD
     )
     return conn
 
