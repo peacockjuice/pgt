@@ -13,8 +13,8 @@ from core.bmp_gql_query import create_order, delivery_slots, update_products_in_
 
 # Дата провайдер
 delivery_address_id = 1579839
-order_sum = 2332.91
-products_and_amounts = [(4328, 202), (3253, 1)]
+order_sum = 2327.95
+products_and_amounts = [(4328, 202), (2574, 1)]
 update_products_in_cart_input = update_products_in_cart_variables(products_and_amounts)
 send_graphql_request(update_products_in_cart, update_products_in_cart_input, BMP_API_TOKEN, bmp_api_url_graphql)
 delivery_slots_input = delivery_slots_variables(delivery_address_id, products_and_amounts, order_sum)

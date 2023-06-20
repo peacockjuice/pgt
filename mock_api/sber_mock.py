@@ -10,6 +10,8 @@ logging.basicConfig(level=logging.DEBUG)
 app = Flask(__name__)
 logger = logging.getLogger(__name__)
 
+app.debug = True
+
 order_status_calls = {}
 
 @app.route("/payment/rest/register.do", methods=["POST"])
