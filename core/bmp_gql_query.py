@@ -280,3 +280,11 @@ mutation ($input: UpdateProductsInCartInput!) {
 """
 
 
+# Мутация очистки корзины
+clear_cart = """
+mutation {
+    clearCart {
+      __typename
+    }
+  }
+"""

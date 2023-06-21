@@ -1,7 +1,11 @@
 import pytest
+import requests
+import time
+
 from config.config import BMP_API_URL, BMP_API_TOKEN, BMP_API_TOKEN_ADMIN, PG_URL
 from constants.common import order_status_completed
 from constants.route import bmp_api_url_graphql
+from mock_api.expectations import create_getOrderStatusExtendedDo_exp, create_registerDo_exp, mockServer_exp_tearDown, create_getOrderStatusExtendedDo_default_exp
 
 # Функции для подготовки и выполнения тестовых запросов
 from core.bmp_gql_input import create_order_variables, delivery_slots_variables, update_products_in_cart_variables
@@ -9,12 +13,14 @@ from core.test_utils import get_order_info_from_pg_db, check_order_response, get
 from core.pg_callbacks import callback_request, callback_refund_request
 from core.bmp_gql import send_graphql_request
 from core.bmp_rest_query import update_order_data, change_order_status
-from core.bmp_gql_query import create_order, delivery_slots, update_products_in_cart
+from core.bmp_gql_query import create_order, delivery_slots, update_products_in_cart, clear_cart
 
 # Дата провайдер
 delivery_address_id = 1579839
-order_sum = 2327.95
-products_and_amounts = [(4328, 202), (2574, 1)]
+order_sum = 13161.3
+products_and_amounts = [(23392, 202), (1270, 1)]
+
+send_graphql_request(clear_cart, {}, BMP_API_TOKEN, bmp_api_url_graphql)
 update_products_in_cart_input = update_products_in_cart_variables(products_and_amounts)
 send_graphql_request(update_products_in_cart, update_products_in_cart_input, BMP_API_TOKEN, bmp_api_url_graphql)
 delivery_slots_input = delivery_slots_variables(delivery_address_id, products_and_amounts, order_sum)
@@ -27,6 +33,9 @@ create_order_input = create_order_variables(delivery_token, products_and_amounts
     (BMP_API_URL, BMP_API_TOKEN, BMP_API_TOKEN_ADMIN)
 ])
 def test_create_order(bmp_api_url, bmp_api_token, bmp_api_token_admin):
+    mockServer_exp_tearDown()
+    create_registerDo_exp()
+#    create_getOrderStatusExtendedDo_default_exp()
     # Отправляем запрос на создание заказа и проверяем ответ на создание заказа
     create_order_response = send_graphql_request(create_order, create_order_input, bmp_api_token, bmp_api_url_graphql)
     order_data, order_id, order_sum, order_item_id, order_item_sum, vendor_form_url, md_order = check_order_response(create_order_response)
@@ -34,13 +43,17 @@ def test_create_order(bmp_api_url, bmp_api_token, bmp_api_token_admin):
     # Получаем информацию о заказе из БД ПШ (order_number мб оптимальнее получить из инпута в /payment/rest/register.do)
     payment_id, order_number = get_order_info_from_pg_db(md_order)
 
+    create_getOrderStatusExtendedDo_exp(md_order, 2)
+
     # Отправляем коллбэк на подтверждение оплаты заказа
     callback_request(PG_URL, order_number, md_order)
 
     # Обновляем данные заказа через REST (вычерк позиции из заказа)
     update_order_data(bmp_api_url, bmp_api_token_admin, order_id, order_sum, order_item_id, order_item_sum)
 
-    # Изменяем статус заказа на "completed"
+    create_getOrderStatusExtendedDo_exp(md_order, 4)
+
+# Изменяем статус заказа на "completed"
     change_order_status(bmp_api_url, bmp_api_token_admin, order_id, order_status_completed)
 
     # Отправляем коллбэк на возврат средств
