@@ -1,8 +1,9 @@
-version: "3"
+version: '3'
 services:
-  mockserver:
-    image: mockserver/mockserver
+  wiremock:
+    image: rodolpheche/wiremock
     ports:
-      - "1080:1080"
-    environment:
-      MOCKSERVER_LOG_LEVEL: INFO
+      - "1080:8080"
+    volumes:
+      - ./mappings:/home/wiremock/mappings
+      - ./__files:/home/wiremock/__files
