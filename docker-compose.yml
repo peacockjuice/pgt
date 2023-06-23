@@ -1,7 +1,7 @@
 version: '3'
 services:
   wiremock:
-    image: rodolpheche/wiremock
+    image: wiremock/wiremock
     ports:
       - "1080:8080"
     volumes:
